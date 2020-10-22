@@ -22,10 +22,11 @@
     <BlazorWebAssemblySdkArtifactsDirectory>$(RepoRoot)artifacts\bin\Microsoft.NET.Sdk.BlazorWebAssembly\</BlazorWebAssemblySdkArtifactsDirectory>
     <_BlazorWebAssemblyTargetsFile>$(RepoRoot)src\Components\WebAssembly\Sdk\src\targets\Microsoft.NET.Sdk.BlazorWebAssembly.Current.targets</_BlazorWebAssemblyTargetsFile>
     <BlazorWebAssemblyJSPath>$(MSBuildThisFileDirectory)blazor.webassembly.js</BlazorWebAssemblyJSPath>
+    <VersionsPropsPath Condition="'$(IsHelixJob)' == 'true' AND Exists('$(MSBuildThisFileDirectory)Versions.props')">Versions.props</VersionsPropsPath>
+    <VersionsPropsPath Condition="'$(VersionsPropsPath)' == ''">$(RepoRoot)\eng\Versions.props</VersionsPropsPath>
   </PropertyGroup>
 
-  <Import Condition="'$(IsHelixJob)' != 'true'" Project="$(RepoRoot)eng\Versions.props" />
-  <Import Condition="'$(IsHelixJob)' == 'true' AND Exists('$(MSBuildThisFileDirectory)Versions.props')" Project="Versions.props" />
+  <Import Condition="'$(IsHelixJob)' != 'true'" Project="$(VersionsPropsPath)" />
 
   <PropertyGroup>
     <!-- Reset version prefix to 1.0.0 for test projects -->
